@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --kumon-blue: #00A0E9;
+    --kumon-dark: #0077B6;
+    --kumon-light: #E0F4FD;
+  }
+}
+
+.text-kumon {
+  color: #00A0E9;
+}
+
+.bg-kumon {
+  background-color: #00A0E9;
+}
+
+.border-kumon {
+  border-color: #00A0E9;
+}
+
+.bg-kumon-dark {
+  background-color: #007bb5;
+}
+
+.bg-kumon-light {
+  background-color: #E8F7FE;
+}
+
+/* Pulse animation for radar map */
+@keyframes radar-pulse {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+.animate-radar {
+  animation: radar-pulse 2s infinite ease-in-out;
+}

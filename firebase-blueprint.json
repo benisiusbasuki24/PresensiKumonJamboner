@@ -1,0 +1,97 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User account for Kumon Jambon staff or administrator",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 150 },
+        "role": { "type": "string", "enum": ["admin", "staff"] },
+        "position": { "type": "string", "maxLength": 100 },
+        "phone": { "type": "string", "maxLength": 25 },
+        "isActive": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Attendance": {
+      "title": "Attendance",
+      "description": "Daily attendance record for staff with GPS verification and time calculations",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string", "maxLength": 100 },
+        "userEmail": { "type": "string", "maxLength": 150 },
+        "date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "checkInTime": { "type": "string" },
+        "checkOutTime": { "type": "string" },
+        "status": { "type": "string", "enum": ["present", "late", "excused", "leave", "absent"] },
+        "lateMinutes": { "type": "number" },
+        "latitude": { "type": "number" },
+        "longitude": { "type": "number" },
+        "distanceMeters": { "type": "number" },
+        "isWithinRadius": { "type": "boolean" },
+        "notes": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["userId", "date", "status"]
+    },
+    "LeaveRequest": {
+      "title": "LeaveRequest",
+      "description": "Leave or permission application submitted by staff",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string", "maxLength": 100 },
+        "userEmail": { "type": "string", "maxLength": 150 },
+        "type": { "type": "string", "enum": ["ijin", "cuti", "sakit"] },
+        "startDate": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "endDate": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "daysCount": { "type": "number" },
+        "reason": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "adminNotes": { "type": "string", "maxLength": 500 },
+        "reviewedBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["userId", "type", "startDate", "endDate", "reason", "status"]
+    },
+    "SystemSetting": {
+      "title": "SystemSetting",
+      "description": "Kumon Jambon presence configuration including GPS center coordinates and work schedule",
+      "type": "object",
+      "properties": {
+        "centerName": { "type": "string", "maxLength": 100 },
+        "centerAddress": { "type": "string", "maxLength": 300 },
+        "targetLat": { "type": "number" },
+        "targetLng": { "type": "number" },
+        "toleranceRadiusMeters": { "type": "number" },
+        "workStartTime": { "type": "string" },
+        "gracePeriodMinutes": { "type": "number" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["centerName", "targetLat", "targetLng", "toleranceRadiusMeters"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "User" },
+      "description": "User profiles for Kumon Jambon admin and staff"
+    },
+    "/attendances/{attendanceId}": {
+      "schema": { "$ref": "Attendance" },
+      "description": "Daily attendance check-ins and check-outs"
+    },
+    "/leave_requests/{requestId}": {
+      "schema": { "$ref": "LeaveRequest" },
+      "description": "Permission and leave requests submitted by staff"
+    },
+    "/system_settings/{settingId}": {
+      "schema": { "$ref": "SystemSetting" },
+      "description": "Branch GPS and scheduling configuration"
+    }
+  }
+}

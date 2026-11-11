@@ -1,0 +1,6 @@
+{
+  "name": "Presensi Online Kumon Jambon",
+  "description": "Sistem presensi online berbasis web real-time untuk admin dan staff KUMON JAMBON dengan validasi GPS 50 meter, rekap performa kehadiran, manajemen ijin & cuti, dan laporan PDF bulanan.",
+  "requestFramePermissions": ["geolocation", "camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
